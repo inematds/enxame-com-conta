@@ -85,7 +85,11 @@
   .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 26px}
   .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.86rem;font-family:Sora;font-weight:600}
   .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
-  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.84rem;line-height:1.6;color:#d6d6e0;white-space:pre;overflow-x:auto}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.84rem;line-height:1.6;color:#d6d6e0;white-space:pre-wrap;overflow-wrap:normal;word-break:normal;overflow-x:auto}
+  .nw{white-space:nowrap}
+  .campos{list-style:none;padding:0;margin:0 0 .4em;display:grid;gap:6px}
+  .campos li{font-size:.92rem;color:var(--mut)}
+  .campos code{color:var(--txt);font-weight:600}
   pre .c{color:#7d7d8a} pre .k{color:var(--amb2)} pre .s{color:#9ece6a} pre .bad{color:#f28b82}
   .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:28px}
   .step>div,.card{min-width:0}
@@ -204,7 +208,7 @@
   <h2>Cada agente a mais lê tudo de novo</h2>
   <p class="sub">Num enxame, ninguém trabalha de graça para o outro. Cada agente recebe o contexto inteiro, lê o que os colegas mandaram, escreve a sua parte e, se der errado, faz de novo. Tudo isso é texto que entra e sai do modelo, e é por texto que você paga.</p>
   <div class="grid g4">
-    <div class="card"><h3>📖 Trabalho</h3><p>Cada agente relê o contexto e a tarefa em cada rodada. Seis agentes em três rodadas são dezoito leituras, não uma.</p></div>
+    <div class="card"><h3>📖 Trabalho</h3><p>Cada agente relê o contexto (tudo o que ele precisa saber para trabalhar) e a tarefa em cada rodada. Seis agentes em três rodadas são dezoito leituras, não uma.</p></div>
     <div class="card"><h3>💬 Coordenação</h3><p>Os agentes trocam mensagens. Cada mensagem é escrita por um e lida por outros, e entra na conta duas vezes.</p></div>
     <div class="card"><h3>🔍 Revisão</h3><p>Quem confere lê tudo o que os outros entregaram. Boa ideia, mas também tem preço.</p></div>
     <div class="card"><h3>🔁 Retrabalho</h3><p>O que volta da revisão é refeito, e refazer multiplica o custo da parte que falhou.</p></div>
@@ -246,7 +250,7 @@
   <div class="ficha">
     <div class="row"><b>1. Vale a pena?</b><span>A tarefa se divide em pedaços que não esperam um pelo outro? É larga (muitas fontes, muitos arquivos)? O prazo importa mais que o custo? Cada entrega boa vale bem mais que rodar? Com menos de duas respostas "sim", use <strong>um agente só</strong>.</span></div>
     <div class="row"><b>2. A conta antes</b><span>Estime quanto o enxame custa e quanto custa um agente só para a mesma tarefa, e para onde vai o dinheiro: trabalho, conversa entre agentes, revisão ou retrabalho.</span></div>
-    <div class="row"><b>3. Orçamento e freio</b><span>Obrigatório: no máximo quantos agentes, quantas chamadas e quantas falhas seguidas. Bateu no limite de uso, para tudo e espera. Quem confere o resultado, e como você sabe que está pronto. Nada rodando em laço sem alguém olhando.</span></div>
+    <div class="row"><b>3. Orçamento e freio</b><span>Obrigatório: no máximo quantos agentes, quantas chamadas e quantas falhas seguidas. Bateu no limite de uso, para tudo e espera. Quem confere o resultado, e como você sabe que está pronto. Nada repetindo sozinho, em laço, sem alguém olhando.</span></div>
     <div class="row"><b>4. A conta de verdade</b><span>Depois, anote cada execução real, com um agente e com o enxame, e compare o custo por entrega aprovada. Se o enxame gastou Y vezes mais e entregou X vezes melhor, com Y maior que X e o prazo não salvando, ficou caro.</span></div>
   </div>
 </div></section>
@@ -290,9 +294,9 @@
   <h2>O que precisa</h2>
   <p class="sub">Só Python 3 e o kit baixado. A trava usa trava de arquivo do sistema (<code>fcntl</code>), então roda em Linux e macOS; no Windows, use o WSL.</p>
   <div class="grid g2">
-    <div class="card"><h3>Baixar o kit</h3><p>Clone o repositório e entre na pasta.</p><pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/enxame-com-conta</span>
-<span class="k">cd</span> enxame-com-conta</pre></div>
-    <div class="card"><h3>Conferir que funciona</h3><p>Os 15 testes devem passar.</p><pre><span class="k">python3 -m unittest discover -s tests -v</span>
+    <div class="card"><h3>Baixar o kit</h3><p>Clone o repositório e entre na pasta.</p><pre><span class="k">git clone</span> <span class="s"><span class="nw">https://github.com/inematds/enxame-com-conta</span></span>
+<span class="k">cd</span> <span class="nw">enxame-com-conta</span></pre></div>
+    <div class="card"><h3>Conferir que funciona</h3><p>Os 15 testes devem passar.</p><pre><span class="k">python3 <span class="nw">-m</span> unittest discover <span class="nw">-s</span> tests <span class="nw">-v</span></span>
 <span class="c">Ran 15 tests ... OK</span></pre></div>
   </div>
 </div></section>
@@ -305,24 +309,15 @@
   <div class="step"><div class="b">1</div><div>
     <h3>Responda a parte 1 da ficha</h3>
     <p>Copie a ficha para a pasta da tarefa. Menos de duas marcadas na parte 1: use um agente só e pare aqui.</p>
-<pre><span class="k">mkdir -p</span> minha-tarefa
-<span class="k">cp</span> FICHA-CONTA.md minha-tarefa/</pre>
+<pre><span class="k">mkdir <span class="nw">-p</span></span> <span class="nw">minha-tarefa</span>
+<span class="k">cp</span> <span class="nw">FICHA-CONTA.md</span> <span class="nw">minha-tarefa/</span></pre>
   </div></div>
 
   <div class="step"><div class="b">2</div><div>
     <h3>Descreva o enxame num plano</h3>
     <p>Copie o exemplo e troque os números pelos da sua tarefa. Os tamanhos são em tokens.</p>
-<pre><span class="k">cp</span> exemplos/plano-enxame.json plano.json
-<span class="c"># agentes            quantos agentes no enxame (6)
-# rodadas            quantas rodadas cada um faz (3)
-# contexto           o que cada agente lê em toda rodada (20000)
-# tarefa             o pedido em si (2000)
-# saida_por_agente   o que cada agente escreve por rodada (3000)
-# mensagens_por_rodada, tamanho_mensagem   conversa entre agentes (2, 1500)
-# revisores          quantos conferem tudo (1)
-# retrabalho         fração refeita, de 0 a 1 (0.3)
-# um_agente          {"rodadas": 4, "saida": 8000}, o mesmo trabalho feito por um só
-# preco              {"entrada": 3.0, "saida": 15.0}, US$ por milhão de tokens</span></pre>
+<pre><span class="k">cp</span> <span class="nw">exemplos/plano-enxame.json</span> plano.json</pre>
+    <ul class="campos"><li><code>agentes</code>: quantos agentes no enxame (6)</li><li><code>rodadas</code>: quantas rodadas cada um faz (3)</li><li><code>contexto</code>: o que cada agente lê em toda rodada (20000)</li><li><code>tarefa</code>: o pedido em si (2000)</li><li><code>saida_por_agente</code>: o que cada agente escreve por rodada (3000)</li><li><code>mensagens_por_rodada, tamanho_mensagem</code>: conversa entre agentes (2 e 1500)</li><li><code>revisores</code>: quantos conferem tudo (1)</li><li><code>retrabalho</code>: fração refeita, de 0 a 1 (0.3)</li><li><code>um_agente</code>: o mesmo trabalho feito por um só: rodadas e saída (4 e 8000)</li><li><code>preco</code>: US$ por milhão de tokens, entrada e saída (3.0 e 15.0)</li></ul>
   </div></div>
 
   <div class="step"><div class="b">3</div><div>
@@ -344,7 +339,11 @@
   <div class="step"><div class="b">5</div><div>
     <h3>Rode cada chamada pela trava</h3>
     <p>Todas as chamadas da tarefa usam o mesmo arquivo de estado. Bateu no limite (429, "rate limit", "hit your limit"…), ela bloqueia todo mundo por <code>--pausa-min</code> minutos (padrão 60).</p>
-<pre><span class="k">python3 trava.py rodar --estado .trava.json --max-chamadas 40 --max-falhas 3 -- claude -p</span> <span class="s">"…"</span>
+<pre><span class="k">python3 trava.py rodar \
+  <span class="nw">--estado</span> .trava.json \
+  <span class="nw">--max-chamadas</span> 40 \
+  <span class="nw">--max-falhas</span> 3 \
+  <span class="nw">--</span> claude <span class="nw">-p</span></span> <span class="s">"…"</span>
 <span class="c"># saídas: 75 = bloqueada por limite (nada foi chamado)
 #         76 = orçamento de chamadas esgotado
 #         77 = falhas seguidas demais</span></pre>
@@ -358,7 +357,7 @@
     <p><code>status</code> mostra chamadas, falhas e os últimos eventos. <code>liberar</code> zera o bloqueio depois que você olhou o que houve. Os dois usam <code>.trava.json</code> por padrão; se no passo 5 você usou outro arquivo, passe o mesmo <code>--estado</code>.</p>
 <pre><span class="k">python3 trava.py status</span>
 <span class="c">{"chamadas": 1, "falhas_seguidas": 0, "bloqueada_ate": 0, "motivo": "", "ultimos": [{"rc": 0, "evento": "ok", …}]}</span>
-<span class="k">python3 trava.py liberar</span>   <span class="c"># --zerar-chamadas também zera o contador</span></pre>
+<span class="k">python3 trava.py liberar</span>   <span class="c"># <span class="nw">--zerar-chamadas</span> também zera o contador</span></pre>
   </div></div>
 
   <div class="step"><div class="b">7</div><div>
@@ -378,7 +377,7 @@
   <span class="chip">Roadmap</span>
   <h2>O que vem</h2>
   <p class="sub">O kit cresce com casos reais.</p>
-  <div class="phase"><div class="tag">Agora</div><div class="d"><strong>Kit v1.0.0</strong><span>Ficha da Conta, conta.py (estimar e comparar), trava.py, o caso lote-135 e 15 testes.</span></div></div>
+  <div class="phase"><div class="tag">Agora</div><div class="d"><strong>Kit v1.0.1</strong><span>Ficha da Conta, conta.py (estimar e comparar), trava.py, o caso lote-135 e 15 testes.</span></div></div>
   <div class="phase"><div class="tag">Em breve</div><div class="d"><strong>Vídeo explicativo</strong><span>Nesta página, nos três idiomas.</span></div></div>
   <div class="phase"><div class="tag">Depois</div><div class="d"><strong>Mais casos medidos</strong><span>Execuções reais de enxame contra um agente só, com o custo por resultado útil publicado.</span></div></div>
 </div></section>

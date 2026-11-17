@@ -85,7 +85,11 @@
   .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 26px}
   .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.86rem;font-family:Sora;font-weight:600}
   .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
-  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.84rem;line-height:1.6;color:#d6d6e0;white-space:pre;overflow-x:auto}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.84rem;line-height:1.6;color:#d6d6e0;white-space:pre-wrap;overflow-wrap:normal;word-break:normal;overflow-x:auto}
+  .nw{white-space:nowrap}
+  .campos{list-style:none;padding:0;margin:0 0 .4em;display:grid;gap:6px}
+  .campos li{font-size:.92rem;color:var(--mut)}
+  .campos code{color:var(--txt);font-weight:600}
   pre .c{color:#7d7d8a} pre .k{color:var(--amb2)} pre .s{color:#9ece6a} pre .bad{color:#f28b82}
   .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:28px}
   .step>div,.card{min-width:0}
@@ -159,10 +163,10 @@
   </span>
   <div class="links">
     <a class="sec" href="#video">Vídeo</a>
-    <a class="sec" href="#custo">Por que custa</a>
-    <a class="sec" href="#cru">A conta certa</a>
+    <a class="sec" href="#custo">Por qué cuesta</a>
+    <a class="sec" href="#cru">El cálculo correcto</a>
     <a class="sec" href="#caso">Caso real</a>
-    <a class="sec" href="#ficha">A ficha</a>
+    <a class="sec" href="#ficha">La ficha</a>
     <a class="sec" href="#tecnico">Kit (técnico)</a>
     <span class="lang"><a href="../">PT</a><a href="../en/">EN</a><a class="on" href="./">ES</a></span>
     <button class="tgl" id="themeToggle" aria-label="Alternar tema" title="Alternar tema">🌙</button>
@@ -174,7 +178,7 @@
   <div class="glow"></div>
   <div class="wrap">
     <div>
-      <span class="chip">Enxambre de agentes · costo</span>
+      <span class="chip">Enjambre de agentes · costo</span>
       <h1>¿Viste el enjambre viral de agentes y quieres montar uno? Completa la <span class="amb">Ficha de la Cuenta</span> antes. La idea es genial. La cuenta, no.</h1>
       <p class="lead">El video muestra a diez agentes trabajando juntos. No muestra la factura. Cada agente vuelve a leerlo todo, conversa con los demás y repite lo que salió mal, y tú pagas cada palabra. La Ficha de la Cuenta, con dos scripts gratis, hace los cálculos antes de ejecutar y pone un límite al gasto.</p>
       <div class="cta">
@@ -234,7 +238,7 @@
     <div class="card"><h3>12.619</h3><p>rechazos por límite de uso en unas 34 horas, alrededor de 400 por hora.</p></div>
     <div class="card"><h3>34 h</h3><p>sin ninguna revisión de video. El trabajo útil se detuvo y nadie se dio cuenta.</p></div>
     <div class="card"><h3>4,9 GB</h3><p>de registros inútiles en el disco, en 13 mil sesiones que no hicieron nada.</p></div>
-    <div class="card"><h3>~ R$ 0</h3><p>de dinero: los rechazos no se cobran. La pérdida fue tiempo y trabajo detenido.</p></div>
+    <div class="card"><h3>~ US$ 0</h3><p>de dinero: los rechazos no se cobran. La pérdida fue tiempo y trabajo detenido.</p></div>
   </div>
   <div class="note" style="margin-top:24px"><strong>La lección para los enjambres:</strong> la solución no fue reescribir el sistema. Faltaban tres protecciones: detenerse ante el primer aviso de límite, terminar el ciclo con el primer error y hacer que todos los procesos pasaran por la misma puerta. Un enjambre son varios procesos que llaman a la IA al mismo tiempo. Sin un freno que todos respeten, el mismo error ocurre muchas más veces y más rápido. Más detalles en el <a href="https://github.com/inematds/enxame-com-conta/blob/main/casos/lote-135.md" target="_blank" rel="noopener">informe del caso (en portugués)</a>.</div>
 </div></section>
@@ -290,9 +294,9 @@
   <h2>Qué necesitas</h2>
   <p class="sub">Solo Python 3 y el kit descargado. El freno usa el bloqueo de archivos del sistema (<code>fcntl</code>), así que funciona en Linux y macOS; en Windows, usa WSL.</p>
   <div class="grid g2">
-    <div class="card"><h3>Descargar el kit</h3><p>Clona el repositorio y entra en la carpeta.</p><pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/enxame-com-conta</span>
-<span class="k">cd</span> enxame-com-conta</pre></div>
-    <div class="card"><h3>Comprobar que funciona</h3><p>Los 15 tests deben pasar.</p><pre><span class="k">python3 -m unittest discover -s tests -v</span>
+    <div class="card"><h3>Descargar el kit</h3><p>Clona el repositorio y entra en la carpeta.</p><pre><span class="k">git clone</span> <span class="s"><span class="nw">https://github.com/inematds/enxame-com-conta</span></span>
+<span class="k">cd</span> <span class="nw">enxame-com-conta</span></pre></div>
+    <div class="card"><h3>Comprobar que funciona</h3><p>Los 15 tests deben pasar.</p><pre><span class="k">python3 <span class="nw">-m</span> unittest discover <span class="nw">-s</span> tests <span class="nw">-v</span></span>
 <span class="c">Ran 15 tests ... OK</span></pre></div>
   </div>
 </div></section>
@@ -300,29 +304,21 @@
 <section id="guia"><div class="wrap">
   <span class="chip">Guía de uso · paso a paso</span>
   <h2>De la ficha a la conclusión</h2>
+  <div class="note">Los archivos del kit (la ficha, los ejemplos) y los mensajes de los scripts están en portugués; esta página explica qué significa cada uno. El veredicto del paso 7 dice: «el enjambre cuesta 5,2× más por entrega aprobada y acierta 1,5× más: solo vale si cada entrega aprobada vale más que 5,2× el costo de un solo agente (pero fue 2,5× más rápido: decide si el plazo lo vale)».</div>
   <p class="sub">Las salidas siguientes son reales: los scripts se ejecutaron con los ejemplos del kit. Las cifras de los ejemplos son ilustrativas.</p>
 
   <div class="step"><div class="b">1</div><div>
     <h3>Responde la parte 1 de la ficha</h3>
     <p>Copia la ficha a la carpeta de la tarea. Si marcas menos de dos opciones en la parte 1, usa un solo agente y detente aquí.</p>
-<pre><span class="k">mkdir -p</span> minha-tarefa
-<span class="k">cp</span> FICHA-CONTA.md minha-tarefa/</pre>
+<pre><span class="k">mkdir <span class="nw">-p</span></span> <span class="nw">minha-tarefa</span>
+<span class="k">cp</span> <span class="nw">FICHA-CONTA.md</span> <span class="nw">minha-tarefa/</span></pre>
   </div></div>
 
   <div class="step"><div class="b">2</div><div>
     <h3>Describe el enjambre en un plan</h3>
     <p>Copia el ejemplo y cambia las cifras por las de tu tarea. Los tamaños se expresan en tokens.</p>
-<pre><span class="k">cp</span> exemplos/plano-enxame.json plano.json
-<span class="c"># agentes            cuántos agentes tiene el enjambre (6)
-# rodadas            cuántas rondas hace cada uno (3)
-# contexto           lo que cada agente lee en cada ronda (20000)
-# tarefa             el pedido en sí (2000)
-# saida_por_agente   lo que cada agente escribe por ronda (3000)
-# mensagens_por_rodada, tamanho_mensagem   conversación entre agentes (2, 1500)
-# revisores          cuántos revisan todo (1)
-# retrabalho         fracción rehecha, de 0 a 1 (0.3)
-# um_agente          {"rodadas": 4, "saida": 8000}, el mismo trabajo hecho por uno solo
-# preco              {"entrada": 3.0, "saida": 15.0}, US$ por millón de tokens</span></pre>
+<pre><span class="k">cp</span> <span class="nw">exemplos/plano-enxame.json</span> plano.json</pre>
+    <ul class="campos"><li><code>agentes</code>: cuántos agentes tiene el enjambre (6)</li><li><code>rodadas</code>: cuántas rondas hace cada uno (3)</li><li><code>contexto</code>: lo que cada agente lee en cada ronda (20000)</li><li><code>tarefa</code>: el pedido en sí (2000)</li><li><code>saida_por_agente</code>: lo que cada agente escribe por ronda (3000)</li><li><code>mensagens_por_rodada, tamanho_mensagem</code>: conversación entre agentes (2 y 1500)</li><li><code>revisores</code>: cuántos revisan todo (1)</li><li><code>retrabalho</code>: fracción rehecha, de 0 a 1 (0.3)</li><li><code>um_agente</code>: el mismo trabajo hecho por uno solo: rondas y salida (4 y 8000)</li><li><code>preco</code>: US$ por millón de tokens, entrada y salida (3.0 y 15.0)</li></ul>
   </div></div>
 
   <div class="step"><div class="b">3</div><div>
@@ -344,7 +340,11 @@
   <div class="step"><div class="b">5</div><div>
     <h3>Ejecuta cada llamada a través del freno</h3>
     <p>Todas las llamadas de la tarea usan el mismo archivo de estado. Si alcanzas el límite (429, «rate limit», «hit your limit»…), bloquea a todos durante <code>--pausa-min</code> minutos (60 por defecto).</p>
-<pre><span class="k">python3 trava.py rodar --estado .trava.json --max-chamadas 40 --max-falhas 3 -- claude -p</span> <span class="s">"…"</span>
+<pre><span class="k">python3 trava.py rodar \
+  <span class="nw">--estado</span> .trava.json \
+  <span class="nw">--max-chamadas</span> 40 \
+  <span class="nw">--max-falhas</span> 3 \
+  <span class="nw">--</span> claude <span class="nw">-p</span></span> <span class="s">"…"</span>
 <span class="c"># salidas: 75 = bloqueada por límite (no se llamó nada)
 #          76 = presupuesto de llamadas agotado
 #          77 = demasiados fallos seguidos</span></pre>
@@ -358,7 +358,7 @@
     <p><code>status</code> muestra las llamadas, los fallos y los últimos eventos. <code>liberar</code> borra el bloqueo después de que hayas revisado lo ocurrido. Ambos usan <code>.trava.json</code> por defecto; si en el paso 5 usaste otro archivo, indica el mismo <code>--estado</code>.</p>
 <pre><span class="k">python3 trava.py status</span>
 <span class="c">{"chamadas": 1, "falhas_seguidas": 0, "bloqueada_ate": 0, "motivo": "", "ultimos": [{"rc": 0, "evento": "ok", …}]}</span>
-<span class="k">python3 trava.py liberar</span>   <span class="c"># --zerar-chamadas también pone el contador en cero</span></pre>
+<span class="k">python3 trava.py liberar</span>   <span class="c"># <span class="nw">--zerar-chamadas</span> también pone el contador en cero</span></pre>
   </div></div>
 
   <div class="step"><div class="b">7</div><div>
@@ -378,7 +378,7 @@
   <span class="chip">Hoja de ruta</span>
   <h2>Lo que viene</h2>
   <p class="sub">El kit crece con casos reales.</p>
-  <div class="phase"><div class="tag">Ahora</div><div class="d"><strong>Kit v1.0.0</strong><span>Ficha de la Cuenta, conta.py (estimar y comparar), trava.py, el caso lote-135 y 15 tests.</span></div></div>
+  <div class="phase"><div class="tag">Ahora</div><div class="d"><strong>Kit v1.0.1</strong><span>Ficha de la Cuenta, conta.py (estimar y comparar), trava.py, el caso lote-135 y 15 tests.</span></div></div>
   <div class="phase"><div class="tag">Pronto</div><div class="d"><strong>Video explicativo</strong><span>En esta página, en los tres idiomas.</span></div></div>
   <div class="phase"><div class="tag">Después</div><div class="d"><strong>Más casos medidos</strong><span>Ejecuciones reales de un enjambre frente a un solo agente, con el costo por resultado útil publicado.</span></div></div>
 </div></section>

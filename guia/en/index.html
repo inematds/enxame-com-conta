@@ -85,7 +85,11 @@
   .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 26px}
   .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.86rem;font-family:Sora;font-weight:600}
   .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
-  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.84rem;line-height:1.6;color:#d6d6e0;white-space:pre;overflow-x:auto}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.84rem;line-height:1.6;color:#d6d6e0;white-space:pre-wrap;overflow-wrap:normal;word-break:normal;overflow-x:auto}
+  .nw{white-space:nowrap}
+  .campos{list-style:none;padding:0;margin:0 0 .4em;display:grid;gap:6px}
+  .campos li{font-size:.92rem;color:var(--mut)}
+  .campos code{color:var(--txt);font-weight:600}
   pre .c{color:#7d7d8a} pre .k{color:var(--amb2)} pre .s{color:#9ece6a} pre .bad{color:#f28b82}
   .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:28px}
   .step>div,.card{min-width:0}
@@ -234,7 +238,7 @@
     <div class="card"><h3>12,619</h3><p>usage limit denials in about 34 hours, around 400 per hour.</p></div>
     <div class="card"><h3>34 h</h3><p>with no video reviews at all. Useful work stopped, and no one noticed.</p></div>
     <div class="card"><h3>4.9 GB</h3><p>of useless logs on disk, across 13 thousand sessions that did nothing.</p></div>
-    <div class="card"><h3>~ R$ 0</h3><p>in money: denied requests aren't charged. The loss was time and stalled work.</p></div>
+    <div class="card"><h3>~ US$ 0</h3><p>in money: denied requests aren't charged. The loss was time and stalled work.</p></div>
   </div>
   <div class="note" style="margin-top:24px"><strong>The lesson for swarms:</strong> the fix wasn't to rewrite the system. Three safeguards were missing: stop at the first usage limit warning, end the cycle at the first error, and route every process through the same gate. A swarm is several processes calling the AI at once. Without a brake they all respect, the same mistake happens many times faster. Details in the <a href="https://github.com/inematds/enxame-com-conta/blob/main/casos/lote-135.md" target="_blank" rel="noopener">case report (in Portuguese)</a>.</div>
 </div></section>
@@ -290,9 +294,9 @@
   <h2>What you need</h2>
   <p class="sub">Just Python 3 and the downloaded kit. The brake uses the system's file locking (<code>fcntl</code>), so it runs on Linux and macOS. On Windows, use WSL.</p>
   <div class="grid g2">
-    <div class="card"><h3>Download the kit</h3><p>Clone the repository and enter the folder.</p><pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/enxame-com-conta</span>
-<span class="k">cd</span> enxame-com-conta</pre></div>
-    <div class="card"><h3>Check that it works</h3><p>All 15 tests should pass.</p><pre><span class="k">python3 -m unittest discover -s tests -v</span>
+    <div class="card"><h3>Download the kit</h3><p>Clone the repository and enter the folder.</p><pre><span class="k">git clone</span> <span class="s"><span class="nw">https://github.com/inematds/enxame-com-conta</span></span>
+<span class="k">cd</span> <span class="nw">enxame-com-conta</span></pre></div>
+    <div class="card"><h3>Check that it works</h3><p>All 15 tests should pass.</p><pre><span class="k">python3 <span class="nw">-m</span> unittest discover <span class="nw">-s</span> tests <span class="nw">-v</span></span>
 <span class="c">Ran 15 tests ... OK</span></pre></div>
   </div>
 </div></section>
@@ -300,29 +304,21 @@
 <section id="guia"><div class="wrap">
   <span class="chip">User guide · step by step</span>
   <h2>From the sheet to the verdict</h2>
+  <div class="note">The kit files (the sheet, the examples) and the script messages are in Portuguese; this page explains what each one means. The step 7 verdict says: “the swarm costs 5.2× more per approved delivery and gets it right 1.5× more often: it is only worth it if each approved delivery is worth more than 5.2× the cost of a single agent (but it was 2.5× faster: decide whether the deadline is worth it)”.</div>
   <p class="sub">The outputs below are real outputs from the scripts running the kit examples. The example numbers are illustrative.</p>
 
   <div class="step"><div class="b">1</div><div>
     <h3>Answer part 1 of the sheet</h3>
     <p>Copy the sheet into the task folder. If fewer than two boxes are checked in part 1, use a single agent and stop here.</p>
-<pre><span class="k">mkdir -p</span> minha-tarefa
-<span class="k">cp</span> FICHA-CONTA.md minha-tarefa/</pre>
+<pre><span class="k">mkdir <span class="nw">-p</span></span> <span class="nw">minha-tarefa</span>
+<span class="k">cp</span> <span class="nw">FICHA-CONTA.md</span> <span class="nw">minha-tarefa/</span></pre>
   </div></div>
 
   <div class="step"><div class="b">2</div><div>
     <h3>Describe the swarm in a plan</h3>
     <p>Copy the example and replace the numbers with your task's numbers. Sizes are in tokens.</p>
-<pre><span class="k">cp</span> exemplos/plano-enxame.json plano.json
-<span class="c"># agentes            how many agents in the swarm (6)
-# rodadas            how many rounds each one runs (3)
-# contexto           what each agent reads every round (20000)
-# tarefa             the request itself (2000)
-# saida_por_agente   what each agent writes per round (3000)
-# mensagens_por_rodada, tamanho_mensagem   talk between agents (2, 1500)
-# revisores          how many check everything (1)
-# retrabalho         fraction redone, from 0 to 1 (0.3)
-# um_agente          {"rodadas": 4, "saida": 8000}, the same work done by a single agent
-# preco              {"entrada": 3.0, "saida": 15.0}, US$ per million tokens</span></pre>
+<pre><span class="k">cp</span> <span class="nw">exemplos/plano-enxame.json</span> plano.json</pre>
+    <ul class="campos"><li><code>agentes</code>: how many agents in the swarm (6)</li><li><code>rodadas</code>: how many rounds each one runs (3)</li><li><code>contexto</code>: what each agent reads every round (20000)</li><li><code>tarefa</code>: the request itself (2000)</li><li><code>saida_por_agente</code>: what each agent writes per round (3000)</li><li><code>mensagens_por_rodada, tamanho_mensagem</code>: talk between agents (2 and 1500)</li><li><code>revisores</code>: how many check everything (1)</li><li><code>retrabalho</code>: fraction redone, from 0 to 1 (0.3)</li><li><code>um_agente</code>: the same work done by a single agent: rounds and output (4 and 8000)</li><li><code>preco</code>: US$ per million tokens, input and output (3.0 and 15.0)</li></ul>
   </div></div>
 
   <div class="step"><div class="b">3</div><div>
@@ -344,7 +340,11 @@
   <div class="step"><div class="b">5</div><div>
     <h3>Run every call through the brake</h3>
     <p>All calls for the task use the same state file. If you hit the limit (429, “rate limit,” “hit your limit”…), it blocks everyone for <code>--pausa-min</code> minutes (default 60).</p>
-<pre><span class="k">python3 trava.py rodar --estado .trava.json --max-chamadas 40 --max-falhas 3 -- claude -p</span> <span class="s">"…"</span>
+<pre><span class="k">python3 trava.py rodar \
+  <span class="nw">--estado</span> .trava.json \
+  <span class="nw">--max-chamadas</span> 40 \
+  <span class="nw">--max-falhas</span> 3 \
+  <span class="nw">--</span> claude <span class="nw">-p</span></span> <span class="s">"…"</span>
 <span class="c"># exit codes: 75 = blocked by a limit (nothing was called)
 #             76 = call budget used up
 #             77 = too many failures in a row</span></pre>
@@ -358,7 +358,7 @@
     <p><code>status</code> shows calls, failures, and recent events. <code>liberar</code> clears the block after you have checked what happened. Both use <code>.trava.json</code> by default; if you used another file in step 5, pass the same <code>--estado</code>.</p>
 <pre><span class="k">python3 trava.py status</span>
 <span class="c">{"chamadas": 1, "falhas_seguidas": 0, "bloqueada_ate": 0, "motivo": "", "ultimos": [{"rc": 0, "evento": "ok", …}]}</span>
-<span class="k">python3 trava.py liberar</span>   <span class="c"># --zerar-chamadas also resets the counter</span></pre>
+<span class="k">python3 trava.py liberar</span>   <span class="c"># <span class="nw">--zerar-chamadas</span> also resets the counter</span></pre>
   </div></div>
 
   <div class="step"><div class="b">7</div><div>
@@ -378,7 +378,7 @@
   <span class="chip">Roadmap</span>
   <h2>What's next</h2>
   <p class="sub">The kit grows with real cases.</p>
-  <div class="phase"><div class="tag">Now</div><div class="d"><strong>Kit v1.0.0</strong><span>Cost Sheet, conta.py (estimate and compare), trava.py, the lote-135 case, and 15 tests.</span></div></div>
+  <div class="phase"><div class="tag">Now</div><div class="d"><strong>Kit v1.0.1</strong><span>Cost Sheet, conta.py (estimate and compare), trava.py, the lote-135 case, and 15 tests.</span></div></div>
   <div class="phase"><div class="tag">Coming soon</div><div class="d"><strong>Explainer video</strong><span>On this page, in all three languages.</span></div></div>
   <div class="phase"><div class="tag">Later</div><div class="d"><strong>More measured cases</strong><span>Real swarm runs compared with a single agent, with the cost per useful result published.</span></div></div>
 </div></section>
