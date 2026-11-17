@@ -1,5 +1,23 @@
 # enxame-com-conta
 
+[![A conta do enxame](guia/assets/banner.jpg)](https://inematds.github.io/enxame-com-conta/guia/)
+
+**🇧🇷 [Português](README.md) · 🇺🇸 [English](README.en.md) · 🇪🇸 [Español](README.es.md)**
+
+## O que é
+
+Um enxame de agentes é quando várias IAs trabalham juntas na mesma tarefa, cada uma num pedaço. Funciona, mas
+gasta muito mais: a própria Anthropic mediu cerca de 15 vezes mais texto processado que um chat comum. A Ficha da
+Conta é uma folha curta para quem pensa em usar enxames no trabalho: ela pergunta se a tarefa pede isso, compara o
+custo com um agente só e põe um teto e um freio antes de rodar. O kit traz a ficha e dois scripts em Python que
+fazem a conta e seguram o gasto. Para entender, é só ler; para usar o kit, precisa de Python 3.
+
+## 📖 Guia de uso
+
+Guia completo (landing + passo a passo): **https://inematds.github.io/enxame-com-conta/guia/**
+
+---
+
 **Você viu o enxame de agentes viral e pensou em montar um. A ideia é genial. A conta, não.**
 
 Este kit mostra quanto um enxame vai custar **antes** de rodar, compara com um agente só fazendo a mesma

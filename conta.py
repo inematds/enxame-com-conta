@@ -11,7 +11,7 @@ A métrica central é o CRU, custo por resultado útil: custo total ÷ entregas 
 import json
 import sys
 
-VERSAO = "1.0.0"
+VERSAO = "1.0.1"
 
 
 def _tokens_agente(contexto, tarefa, rodadas, mensagens, tam_msg):
