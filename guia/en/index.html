@@ -208,7 +208,7 @@
   <h2>Every extra agent reads everything again</h2>
   <p class="sub">In a swarm, no one works for free for the others. Each agent gets the full context, reads what its colleagues sent, writes its part, and tries again if something goes wrong. All of that is text going into and out of the model, and that's what you pay for.</p>
   <div class="grid g4">
-    <div class="card"><h3>📖 Work</h3><p>Each agent rereads the context and task every round. Six agents over three rounds means eighteen reads, not one.</p></div>
+    <div class="card"><h3>📖 Work</h3><p>Each agent rereads the context (everything it needs to know to do the work) and the task every round. Six agents over three rounds means eighteen reads, not one.</p></div>
     <div class="card"><h3>💬 Coordination</h3><p>Agents exchange messages. One writes each message, others read it, so it counts twice.</p></div>
     <div class="card"><h3>🔍 Review</h3><p>The reviewer reads everything the others delivered. Good idea, but it has a cost too.</p></div>
     <div class="card"><h3>🔁 Rework</h3><p>Anything sent back for review must be redone, multiplying the cost of the part that failed.</p></div>
@@ -364,7 +364,10 @@
   <div class="step"><div class="b">7</div><div>
     <h3>Record runs and compare</h3>
     <p>For the same task, with a single agent and with the swarm, record: <code>arquitetura</code>, <code>custo</code>, <code>aprovada</code>, <code>retrabalho</code>, <code>minutos</code>.</p>
-<pre><span class="k">python3 conta.py comparar exemplos/execucoes.json</span>
+<pre><span class="k">cp</span> exemplos/execucoes.json execucoes.json</pre>
+    <ul class="campos"><li><code>arquitetura</code>: <code>um_agente</code> (single agent) or <code>enxame</code> (swarm), only these two values</li><li><code>custo</code>: what that run cost</li><li><code>aprovada</code>: <code>true</code> if someone approved the delivery, <code>false</code> if not</li><li><code>retrabalho</code>: fraction redone, from 0 to 1</li><li><code>minutos</code>: how long it took</li></ul>
+    <p>Then run it on your file. Below, the output for the example:</p>
+<pre><span class="k">python3 conta.py comparar execucoes.json</span>
 <span class="c">"um_agente": {"aprovadas": 2, "custo_total": 1.2, "cru": 0.6, "minutos_medio": 17.7}
 "enxame":    {"aprovadas": 3, "custo_total": 9.3, "cru": 3.1, "minutos_medio": 7.0}
 "veredito": "o enxame custa 5.2× mais por entrega aprovada e acerta 1.5× mais: só vale se cada

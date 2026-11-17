@@ -363,7 +363,10 @@
   <div class="step"><div class="b">7</div><div>
     <h3>Anote as execuções e compare</h3>
     <p>Para a mesma tarefa, com um agente e com o enxame: <code>arquitetura</code>, <code>custo</code>, <code>aprovada</code>, <code>retrabalho</code>, <code>minutos</code>.</p>
-<pre><span class="k">python3 conta.py comparar exemplos/execucoes.json</span>
+<pre><span class="k">cp</span> exemplos/execucoes.json execucoes.json</pre>
+    <ul class="campos"><li><code>arquitetura</code>: <code>um_agente</code> ou <code>enxame</code> (só esses dois valores)</li><li><code>custo</code>: quanto custou essa execução</li><li><code>aprovada</code>: <code>true</code> se alguém aprovou a entrega, <code>false</code> se não</li><li><code>retrabalho</code>: fração refeita, de 0 a 1</li><li><code>minutos</code>: quanto tempo levou</li></ul>
+    <p>Depois rode com o seu arquivo. Abaixo, a saída com o exemplo:</p>
+<pre><span class="k">python3 conta.py comparar execucoes.json</span>
 <span class="c">"um_agente": {"aprovadas": 2, "custo_total": 1.2, "cru": 0.6, "minutos_medio": 17.7}
 "enxame":    {"aprovadas": 3, "custo_total": 9.3, "cru": 3.1, "minutos_medio": 7.0}
 "veredito": "o enxame custa 5.2× mais por entrega aprovada e acerta 1.5× mais: só vale se cada

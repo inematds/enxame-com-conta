@@ -208,7 +208,7 @@
   <h2>Cada agente adicional vuelve a leerlo todo</h2>
   <p class="sub">En un enjambre, nadie trabaja gratis para los demás. Cada agente recibe todo el contexto, lee lo que enviaron sus compañeros, escribe su parte y, si algo sale mal, lo repite. Todo eso es texto que entra y sale del modelo, y pagas por ese texto.</p>
   <div class="grid g4">
-    <div class="card"><h3>📖 Trabajo</h3><p>Cada agente vuelve a leer el contexto y la tarea en cada ronda. Seis agentes en tres rondas son dieciocho lecturas, no una.</p></div>
+    <div class="card"><h3>📖 Trabajo</h3><p>Cada agente vuelve a leer el contexto (todo lo que necesita saber para trabajar) y la tarea en cada ronda. Seis agentes en tres rondas son dieciocho lecturas, no una.</p></div>
     <div class="card"><h3>💬 Coordinación</h3><p>Los agentes intercambian mensajes. Uno escribe cada mensaje y los demás lo leen; así que se cuenta dos veces.</p></div>
     <div class="card"><h3>🔍 Revisión</h3><p>Quien revisa lee todo lo que entregaron los demás. Es buena idea, pero también tiene un costo.</p></div>
     <div class="card"><h3>🔁 Rehacer</h3><p>Lo que vuelve de la revisión se hace de nuevo, y repetir multiplica el costo de la parte que falló.</p></div>
@@ -364,7 +364,10 @@
   <div class="step"><div class="b">7</div><div>
     <h3>Anota las ejecuciones y compara</h3>
     <p>Para la misma tarea, con un agente y con el enjambre: <code>arquitetura</code>, <code>custo</code>, <code>aprovada</code>, <code>retrabalho</code>, <code>minutos</code>.</p>
-<pre><span class="k">python3 conta.py comparar exemplos/execucoes.json</span>
+<pre><span class="k">cp</span> exemplos/execucoes.json execucoes.json</pre>
+    <ul class="campos"><li><code>arquitetura</code>: <code>um_agente</code> (un solo agente) o <code>enxame</code> (enjambre), solo estos dos valores</li><li><code>custo</code>: cuánto costó esa ejecución</li><li><code>aprovada</code>: <code>true</code> si alguien aprobó la entrega, <code>false</code> si no</li><li><code>retrabalho</code>: fracción rehecha, de 0 a 1</li><li><code>minutos</code>: cuánto tardó</li></ul>
+    <p>Después ejecútalo con tu archivo. Abajo, la salida con el ejemplo:</p>
+<pre><span class="k">python3 conta.py comparar execucoes.json</span>
 <span class="c">"um_agente": {"aprovadas": 2, "custo_total": 1.2, "cru": 0.6, "minutos_medio": 17.7}
 "enxame":    {"aprovadas": 3, "custo_total": 9.3, "cru": 3.1, "minutos_medio": 7.0}
 "veredito": "o enxame custa 5.2× mais por entrega aprovada e acerta 1.5× mais: só vale se cada
